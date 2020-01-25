@@ -18,7 +18,7 @@ class_names_t = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
 
 class_names = ['soda', 'liha']
 
-makeNew=True
+makeNew=False
 nOfImages=200
 
 #train_images = np.array([np.array(np.mean(mpimg.imread("train/train_"+str(number)+".png")[:,:,:3][:, :, :3],2)) for number in range(nOfImages)])
@@ -51,20 +51,17 @@ for i in range(nOfImages):
         if makeNew:
             temp_image = rotate(train_images[i], random.randint(0, 359), reshape=False, order=1)
             temp_image = np.roll(temp_image, random.randint(-1,1), random.randint(0,1))
-
             mpimg.imsave("augmented/aug_"+str(i)+"_"+str(j)+".png", temp_image)
             #imageio.imwrite("augmented/aug_"+str(i)+"_"+str(j)+".png", temp_image)
-
-            train_labels = np.append(train_labels, train_labels[i])
             temp_image=[temp_image]
             train_images = np.append(train_images, temp_image, axis=0)
 
-            print("i:",i ,", j:", j)
-        else:
-            temp_image=np.array(mpimg.imread("augmented/aug_"+str(i)+"_"+str(j)+".png")[:,:,:3])
-            train_labels = np.append(train_labels, train_labels[i])
-            temp_image=[temp_image]
-            train_images = np.append(train_images, temp_image, axis=0)
+        train_labels = np.append(train_labels, train_labels[i])
+        #print("i:",i ,", j:", j)
+    if not makeNew:
+        temp_image=np.array([np.array(mpimg.imread("augmented/aug_"+str(i)+"_"+str(j)+".png")[:,:,:3]) for j in range(40)])
+        #temp_image=[temp_image]
+        train_images = np.append(train_images, temp_image, axis=0)
 
 
 #"""
