@@ -61,7 +61,7 @@ for i in range(nOfImages):
 
             print("i:",i ,", j:", j)
         else:
-            temp_image=np.array(mpimg.imread("augmented/aug_"+str(i)+"_"+str(j)+".png"))
+            temp_image=np.array(mpimg.imread("augmented/aug_"+str(i)+"_"+str(j)+".png")[:,:,:3])
             train_labels = np.append(train_labels, train_labels[i])
             temp_image=[temp_image]
             train_images = np.append(train_images, temp_image, axis=0)
